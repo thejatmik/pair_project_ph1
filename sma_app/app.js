@@ -1,10 +1,9 @@
 const express = require('express');
-const router = require('express').Router();
 
 const app = express();
 const PORT = 3000;
 
-const rootRouter = require('./routes/index')
+const rootRouter = require('./router/index')
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded( {extended: true} ));
