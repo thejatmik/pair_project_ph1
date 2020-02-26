@@ -1,10 +1,15 @@
 const express = require('express');
+const router = require('express').Router();
 
 const app = express();
 const PORT = 3000;
 
-app.get("/", (req, res) => {
-    res.send("Hewo root owo");
-});
+const rootRouter = require('./routes/index')
+
+app.set("view engine", "ejs");
+app.use(express.urlencoded( {extended: true} ));
+app.use(express.static(__dirname + "/public/"));
+
+app.use("/", rootRouter);
 
 app.listen(PORT, () => console.log("Server jalan bang"));
