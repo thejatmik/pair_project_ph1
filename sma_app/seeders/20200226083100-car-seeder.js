@@ -2,17 +2,19 @@
 
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-       return queryInterface.bulkInsert('Car', [{
-        OwnerId: '1',
+       return queryInterface.bulkInsert('Cars', [{
+        OwnerId: 1,
         brand: 'ASEMKA',
         rentalPrice: 500000,
         longitude: '0.0',
         latitude: '0.0',
         type: 'SUV',
         isReady: true,
-        // plateNumber: 'B 123 AA'
+        // plateNumber: 'B 123 AA',
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '1',
+        OwnerId: 1,
         brand: 'Xenia',
         rentalPrice: 700000,
         longitude: '0.0',
@@ -20,8 +22,10 @@ module.exports = {
         type: 'Sedan',
         isReady: true,
         // plateNumber: 'B 234 BB'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '3',
+        OwnerId: 3,
         brand: 'Avanza',
         rentalPrice: 1000000,
         longitude: '0.0',
@@ -29,8 +33,10 @@ module.exports = {
         type: 'Convertible',
         isReady: true,
         // plateNumber: 'B 999 AA'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '4',
+        OwnerId: 4,
         brand: 'Starbucks',
         rentalPrice: 200000,
         longitude: '0.0',
@@ -38,8 +44,10 @@ module.exports = {
         type: 'Hatchback',
         isReady: true,
         // plateNumber: 'B 7777 AA'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '5',
+        OwnerId: 5,
         brand: 'Le Minerale',
         rentalPrice: 500000,
         longitude: '0.0',
@@ -47,8 +55,10 @@ module.exports = {
         type: 'SUV',
         isReady: true,
         // plateNumber: 'B 888 AA'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '3',
+        OwnerId: 3,
         brand: 'ESEMKA',
         rentalPrice: 500000,
         longitude: '0.0',
@@ -56,8 +66,10 @@ module.exports = {
         type: 'Double Cabin',
         isReady: true,
         // plateNumber: 'B 111 ZZ'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
-        OwnerId: '1',
+        OwnerId: 1,
         brand: 'ESEMKA',
         rentalPrice: 500000,
         longitude: '0.0',
@@ -65,6 +77,8 @@ module.exports = {
         type: 'SUV',
         isReady: true,
         // plateNumber: 'B 999 GG'
+        createdAt: new Date(),
+        updatedAt: new Date()
     }], {});
 	},
 
@@ -75,6 +89,7 @@ module.exports = {
 
 			Example:
 			return queryInterface.bulkDelete('People', null, {});
-		*/
+        */
+       return queryInterface.bulkDelete('Cars', null, {});
 	}
 };
