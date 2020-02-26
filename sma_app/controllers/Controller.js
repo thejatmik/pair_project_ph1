@@ -1,4 +1,4 @@
-const { Owner } = require('../models/index');
+const { Owner, Renter } = require('../models/index');
 
 class Controller {
     static getRoot(req, res) {
@@ -8,15 +8,31 @@ class Controller {
         res.render("login");
     }
     static postLogin(req, res) {
-        Owner.findAll({
-            where: {
-                username: req.body.username,
-                password: req.body.password
+        Promise.all([
+            Owner.findAll({
+                where: {
+                    username: req.body.username,
+                    password: req.body.password
+                }
+            }),
+            Renter.findAll({
+                where: {
+                    username: req.body.username,
+                    password: req.body.password
+                }
+            })
+        ])
+        // .then(([owner, renter]) => {
+        .then(arrRes => {
+            let login;
+            for (let item of arrRes) {
+                if (item.length > 0) {
+                    // login = item;
+                    login = typeof item;
+                    // login.push(item[0].instanceof)
+                }
             }
-        })
-        Owner.findAll()
-        .then(result => {
-            res.send(result);
+            res.send(login);
         })
         .catch(err => {
             res.send(err);
