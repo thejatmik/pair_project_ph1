@@ -1,8 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Renter = sequelize.define('Renter', {
-    name: DataTypes.STRING
-  }, {});
+  class Renter extends sequelize.Sequelize.Model {};
+  Renter.init({
+    name: {
+      type: DataTypes.STRING
+    },
+    username: {
+      type: DataTypes.STRING
+    },
+    password: {
+      type: DataTypes.STRING
+    }
+  }, {
+    sequelize,
+    modelName: 'Renter'
+  });
   Renter.associate = function(models) {
     // associations can be defined here
   };

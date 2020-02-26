@@ -1,12 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Booking = sequelize.define('Booking', {
-    RenterId: DataTypes.INTEGER,
-    CarId: DataTypes.INTEGER,
-    paymentStatus: DataTypes.STRING,
-    startDate: DataTypes.STRING,
-    rentDay: DataTypes.STRING
-  }, {});
+  class Booking extends sequelize.Sequelize.Model {};
+  Booking.init({
+    RenterId: {
+      type: DataTypes.INTEGER
+    },
+    CarId: {
+      type: DataTypes.INTEGER
+    },
+    paymentStatus: {
+      type: DataTypes.STRING
+    },
+    startDate: {
+      type: DataTypes.STRING
+    },
+    rentDay: {
+      type: DataTypes.STRING
+    }
+  }, {
+    sequelize,
+    modelName: 'Booking'
+  });
   Booking.associate = function(models) {
     // associations can be defined here
   };
