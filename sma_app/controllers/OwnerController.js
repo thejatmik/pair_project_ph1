@@ -2,8 +2,7 @@ const { Owner, Car} = require('../models/index');
 
 class OwnerController {
 	static showList(req, res) {
-		let ownerId = req.params.id;
-		// let ownerId = ambil dari session
+		let ownerId = req.session.user.id;
 
 		Owner.findByPk(ownerId, {
 			include: {
