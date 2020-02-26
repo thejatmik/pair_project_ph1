@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Owner Page</title>
-	<%- include('./bootstrap-css') %> 
+	<%- include('../bootstrap-css') %> 
 </head>
 <body>
 	<div class="container">
@@ -21,19 +21,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% data.cars.forEach((e, i) => { %>
-					<tr class="table-<%= (e.isReady) 'primary' : 'danger' %>">
+				<% data.owner.Cars.forEach((e, i) => { %>
+					<tr class="table-<%= (e.isReady === 'true') ? 'success' : 'danger' %>">
 						<td><%= i + 1 %> </td>
 						<td><%= e.brand %></td>
 						<td><%= e.type %></td>
 						<td><%= e.rentalPrice %></td>
-						<td><%= (e.isReady) 'Available' : 'Unavailable' %></td>
+						<td><%= (e.isReady === 'true') ? 'Available' : 'Unavailable' %></td>
 						<td style="text-align: center;">
 							<button class="btn btn-primary" 
-								onclick="location.href='/<%= modelName %>/update/<%= e.dataValues.id %>'">Edit</button>
+								onclick="location.href='/owner/update/<%= e.id %>'">Edit</button>
 						</td>
 						<td style="text-align: center;">
-							<form action="/<%= modelName %>/delete/<%= e.dataValues.id %>" method="get">
+							<form action="/owner/delete/?carId=<%= e.id %>" method="get">
 								<button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
 							</form>
 						</td>
@@ -42,6 +42,6 @@
 			</tbody>
 		</table>
 	</div>
-	<%- include('./bootstrap-js') %> 
+	<%- include('../bootstrap-js') %> 
 </body>
 </html>

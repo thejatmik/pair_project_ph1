@@ -2,14 +2,21 @@ const { Owner, Car} = require('../models/index');
 
 class OwnerController {
 	static showList(req, res) {
-		let ownerId = req.params.id;
-		// let ownerId = ambil dari session
+		let ownerId = req.session.user.id;
 
 		Owner.findByPk(ownerId, {
-			include: [Car]
+			include: {
+				model: Car,
+			},
+			// order: [['isReady', 'DESC']]
+			
 		})
 			.then(result => {
-				console.log(result);
+				res.render('owner/list', {
+					data: {
+						owner: result
+					}
+				})
 			})
 			.catch(err => {
 				console.log(err);
