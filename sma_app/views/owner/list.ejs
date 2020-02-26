@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Owner Page</title>
+	<%- include('./bootstrap-css') %> 
+</head>
+<body>
+	<div class="container">
+		<p>Hi <%= data.owner.name %></p>
+		<table id="movie" class="table table-striped table-bordered table-hover" style="width:100%">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Brand</th>
+					<th>Type</th>
+					<th>Rental Price</th>
+					<th>Status</th>
+					<th colspan="2" style="text-align: center;">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% data.cars.forEach((e, i) => { %>
+					<tr class="table-<%= (e.isReady) 'primary' : 'danger' %>">
+						<td><%= i + 1 %> </td>
+						<td><%= e.brand %></td>
+						<td><%= e.type %></td>
+						<td><%= e.rentalPrice %></td>
+						<td><%= (e.isReady) 'Available' : 'Unavailable' %></td>
+						<td style="text-align: center;">
+							<button class="btn btn-primary" 
+								onclick="location.href='/<%= modelName %>/update/<%= e.dataValues.id %>'">Edit</button>
+						</td>
+						<td style="text-align: center;">
+							<form action="/<%= modelName %>/delete/<%= e.dataValues.id %>" method="get">
+								<button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+							</form>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+	<%- include('./bootstrap-js') %> 
+</body>
+</html>
