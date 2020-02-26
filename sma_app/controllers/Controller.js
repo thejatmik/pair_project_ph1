@@ -1,5 +1,6 @@
 const { Owner, Renter } = require('../models/index');
 
+
 class Controller {
     static getRoot(req, res) {
         res.send("hewo root controll owo");
@@ -40,5 +41,4 @@ class Controller {
         // res.send(req.body);
     }
 }
-
 module.exports = Controller;
