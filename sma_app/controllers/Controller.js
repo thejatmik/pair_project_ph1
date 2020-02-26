@@ -1,4 +1,4 @@
-const { Owner } = require("../models/index");
+const { Owner } = require('../models/index');
 
 class Controller {
     static getRoot(req, res) {
@@ -14,6 +14,7 @@ class Controller {
                 password: req.body.password
             }
         })
+        Owner.findAll()
         .then(result => {
             res.send(result);
         })
