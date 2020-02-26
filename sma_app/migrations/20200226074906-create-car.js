@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       OwnerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Owners',
+          key: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       brand: {
         type: Sequelize.STRING

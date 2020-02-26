@@ -9,10 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       RenterId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Renters',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       CarId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Cars',
+          key: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       paymentStatus: {
         type: Sequelize.STRING
