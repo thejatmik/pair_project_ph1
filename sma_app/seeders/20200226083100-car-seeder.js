@@ -20,7 +20,7 @@ module.exports = {
         longitude: '0.0',
         latitude: '0.0',
         type: 'Sedan',
-        isReady: true,
+        isReady: false,
         // plateNumber: 'B 234 BB'
         createdAt: new Date(),
         updatedAt: new Date()

@@ -6,10 +6,18 @@ class OwnerController {
 		// let ownerId = ambil dari session
 
 		Owner.findByPk(ownerId, {
-			include: [Car]
+			include: {
+				model: Car,
+			},
+			// order: [['isReady', 'DESC']]
+			
 		})
 			.then(result => {
-				console.log(result);
+				res.render('owner/list', {
+					data: {
+						owner: result
+					}
+				})
 			})
 			.catch(err => {
 				console.log(err);
