@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Renter.associate = function(models) {
     // associations can be defined here
+    Renter.hasOne(models.Booking);
   };
   return Renter;
 };
