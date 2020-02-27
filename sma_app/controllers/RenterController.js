@@ -10,8 +10,11 @@ class RenterController {
 			}]
 		})
 		.then(result => {
-			// res.send(result);
-			res.render("booking/details", {table: result});
+			// console.log(result.Booking);
+			res.render("booking/details", {
+				table: result,
+				modelName: 'renter'
+			});
 		})
 		.catch(err => {
 			res.send(err)

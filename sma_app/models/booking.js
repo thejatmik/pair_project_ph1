@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		},
 		startDate: {
-			type: DataTypes.STRING
+			type: DataTypes.DATE
 		},
 		rentDay: {
 			type: DataTypes.STRING
@@ -22,7 +22,21 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}, {
 		sequelize,
-		modelName: 'Booking'
+		modelName: 'Booking',
+		getterMethods: {
+			startDateFormatted () {
+				let rawValue = this.startDate;
+				return `${rawValue.getFullYear()}-${(rawValue.getMonth() + 1) < 10 ? ('0' + (rawValue.getMonth() + 1)) : rawValue.getMonth() + 1}-${rawValue.getDate() < 10 ? ('0' + rawValue.getDate()) : rawValue.getDate()}`;
+			},
+			daysLeft () {
+				let startDate = this.startDate;
+				let currentDate = new Date();
+
+				const diffTime = Math.abs(currentDate - startDate);
+				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+				return diffDays;
+			}
+		}
 	});
 	Booking.associate = function(models) {
 		// associations can be defined here
