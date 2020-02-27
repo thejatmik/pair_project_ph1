@@ -1,0 +1,22 @@
+<div id=<%= divId %> style="height:250px;"></div>
+<script>
+    function plotA () {
+        let center = {
+            long: <%= car.longitude %>,
+            lat: <%= car.latitude %>
+        };
+        let theMap = L.map(<%= divId %>, {center: [center.lat, center.long], trackResize: false, worldCopyJump: true}).setView({lon: center.long, lat: center.lat}, 8);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            reuseTiles: true,
+            unloadInvisibleTiles: true,
+            id: 'mapbox/streets-v11',
+            accessToken: 'pk.eyJ1IjoidGhlamF0bWlrIiwiYSI6ImNrNXhlcno2bTAxaHIzbnFyNG5qeXo1cDgifQ.X-pDi14SNsipjwciVobHnA'
+        }).addTo(theMap);
+        let a = L.marker({lon: center.long, lat: center.lat}).addTo(theMap);
+        a.bindPopup("<%= `${car.brand} ${car.type}` %>").openPopup();
+        
+    }
+    plotA()
+</script>
