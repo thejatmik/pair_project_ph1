@@ -1,4 +1,4 @@
-const { Owner, Car} = require('../models/index');
+const { Owner, Car, Booking } = require('../models/index');
 
 class OwnerController {
 	static showList(req, res) {
@@ -15,7 +15,8 @@ class OwnerController {
 					data: {
 						owner: result
 					},
-					modelName: 'owner'
+					modelName: 'owner',
+					userType: req.session.userType
 				})
 			})
 			.catch(err => {
@@ -27,7 +28,8 @@ class OwnerController {
 		res.render('owner/form', {
 			'modelName': 'owner',
 			'pageTitle': 'Add New Car',
-			'action': 'showCreate'
+			'action': 'showCreate',
+			userType: req.session.userType
 		})
 	}
 	
@@ -56,7 +58,8 @@ class OwnerController {
 					},
 					'action': 'showUpdate',
 					'modelName': 'owner',
-					'pageTitle': 'Update Car'
+					'pageTitle': 'Update Car',
+					userType: req.session.userType
 				});
 			})
 			.catch(err => {
@@ -80,7 +83,7 @@ class OwnerController {
 			});
 	}
 	
-	static delete(req, res) {
+	static delete (req, res) {
 		let carId = req.params.carId;
 
 		Car.destroy({
@@ -95,6 +98,29 @@ class OwnerController {
 			})
 	}
 	
+	static close (req, res) {
+		let carId = req.params.carId;
+		console.log(carId);
+		Car.update({
+			isReady: true
+		}, {
+			where: {
+				id: carId
+			}
+		})
+			.then(result => {
+				return Booking.destroy({
+					where: { CarId: carId } 
+				})
+			})
+			.then(result => {
+				res.redirect('/owner');
+			})
+			.catch(err => {
+				console.log(err);
+				res.send(err)
+			});
+	}
 }
 
 module.exports = OwnerController;

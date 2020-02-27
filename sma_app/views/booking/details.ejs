@@ -63,6 +63,8 @@
 								<% if (helpers.isToday(table.Booking.startDate)) { %> 
 							<a class="btn btn-primary" href="/renter/bookingdetail/startrent/?carId=<%= table.Booking.Car.id %>" role="button">Start rent</a>
 								<% } %> 
+							<% } else { %>
+							<a class="btn btn-primary" href="/renter/bookingdetail/moveLoc/?carId=<%= table.Booking.Car.id %>" role="button">Update Location</a>
 							<% } %> 
 							<a class="btn btn-primary" href="/renter/bookingdetail/cancel/?carId=<%= table.Booking.Car.id %>" role="button">Cancel Booking</a>
 						</div>
