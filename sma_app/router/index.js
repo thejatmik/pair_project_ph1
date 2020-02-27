@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const Controller = require('../controllers/Controller.js')
+
 const renterRoute = require('./renterRoute.js');
 const ownerRoute = require('./ownerRoute.js');
+
 const canLogout = require('../middlewares/canLogout.js');
 const isRenter = require('../middlewares/isRenter');
 const isOwner = require('../middlewares/isOwner');

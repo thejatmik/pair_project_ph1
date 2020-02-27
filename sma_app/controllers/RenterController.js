@@ -13,7 +13,7 @@ class RenterController {
 			// console.log(result.Booking);
 			res.render("booking/details", {
 				table: result,
-				modelName: 'renter'
+				modelName: 'renter/bookingdetail'
 			});
 		})
 		.catch(err => {
@@ -50,7 +50,6 @@ class RenterController {
 			include: [Owner]
 		})
 			.then(result => {
-				console.log(result);
 				res.render('booking/form', {
 					'pageTitle': 'Booking',
 					'data': {
