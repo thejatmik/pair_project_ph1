@@ -1,4 +1,7 @@
 const { Renter, Owner, Car, Booking } = require('../models/index')
+const daysLeft = require('../helpers/daysLeft');
+const dateFormatter = require('../helpers/dateFormatter');
+const isToday = require('../helpers/isToday')
 
 class RenterController {
 	static bookDetail (req, res) {
@@ -10,10 +13,14 @@ class RenterController {
 			}]
 		})
 		.then(result => {
-			// console.log(result.Booking);
 			res.render("booking/details", {
 				table: result,
-				modelName: 'renter/bookingdetail'
+				modelName: 'renter/bookingdetail',
+				helpers: {
+					daysLeft: daysLeft,
+					dateFormatter: dateFormatter,
+					isToday: isToday
+				}
 			});
 		})
 		.catch(err => {
@@ -66,29 +73,44 @@ class RenterController {
 	}
 
 	static book (req, res) {
-		// res.send(req.body);
-		// let obj = 
-		// renter id = req.session.user.id
-		// car id = req.params.carId
-		Booking.create({
-			RenterId: req.session.user.id,
-			CarId: req.params.carId,
-			startDate: req.body.startDate,
-			rentDay: req.body.rentDays
-		})
-		.then(result => {
-			res.redirect("/renter/bookingdetail")
-		})
-		.catch(err => {
-			res.send(err);
-		});
+		let obj = req.body;
+		obj.RenterId = req.session.user.id
+		obj.CarId = req.params.carId
 
+		Booking.create(obj)
+			.then(result => {
+				return Car.update({
+					isReady: false
+				}, {
+					where: {
+						id: obj.CarId
+					}
+				})
+			})
+			.then(result => {
+				res.redirect("/renter/bookingdetail")
+			})
+			.catch(err => {
+				console.log(err);
+				res.send(err);
+			});
 	}
 	static removeBooking(req, res) {
+		let carId = req.query.carId;
+
 		Booking.destroy({
 			where: {
 				RenterId: req.session.user.id
 			}
+		})
+		.then(result => {
+			return Car.update({
+				isReady: true
+			}, {
+				where: {
+					id: carId
+				}
+			})
 		})
 		.then(result => {
 			res.redirect("/renter/bookingdetail");
@@ -113,6 +135,7 @@ class RenterController {
 		})
 	}
 	static startRent(req, res) {
+		let carId = req.query.carId;
 		Booking.update({
 			bookStatus: true
 		}, {
@@ -121,7 +144,7 @@ class RenterController {
 			}
 		})
 		.then(result => {
-			res.redirect("/renter/bookingdetail")
+			res.redirect("/renter/bookingdetail");
 		})
 		.catch(err => {
 			res.send(err);

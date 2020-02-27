@@ -1,4 +1,6 @@
 'use strict';
+const dateFormatter = require('../helpers/dateFormatter');
+
 module.exports = (sequelize, DataTypes) => {
 	class Booking extends sequelize.Sequelize.Model {};
 	Booking.init({
@@ -12,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		},
 		startDate: {
-			type: DataTypes.DATE
+			type: DataTypes.DATE,
+			validate: {
+				lessThanToday (value) {
+					if (value < new Date()) throw new Error('Rent Date not valid!')
+				}
+			}
 		},
 		rentDay: {
 			type: DataTypes.STRING
@@ -23,18 +30,10 @@ module.exports = (sequelize, DataTypes) => {
 	}, {
 		sequelize,
 		modelName: 'Booking',
-		getterMethods: {
-			startDateFormatted () {
-				let rawValue = this.startDate;
-				return `${rawValue.getFullYear()}-${(rawValue.getMonth() + 1) < 10 ? ('0' + (rawValue.getMonth() + 1)) : rawValue.getMonth() + 1}-${rawValue.getDate() < 10 ? ('0' + rawValue.getDate()) : rawValue.getDate()}`;
-			},
-			daysLeft () {
-				let startDate = this.startDate;
-				let currentDate = new Date();
-
-				const diffTime = Math.abs(currentDate - startDate);
-				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-				return diffDays;
+		hooks: {
+			beforeCreate: (booking, options) => {
+				booking.paymentStatus = 'Unpaid';
+				booking.bookStatus = false;
 			}
 		}
 	});
