@@ -6,7 +6,11 @@
 				<a class="nav-link" href="/<%= modelName %>">Home</a>
 			</li>
 			<li class="nav-item active">
-				<%# if () //if logged in then show logout else login button %> 
+				<% if (userType === 'renter') { %>
+					<a class="nav-link" href="/bookingdetail">Booking Detail</a>
+					<a class="nav-link" href="/availablecar">Available Car</a>
+				<% } %>
+				// if logged in then show logout else login button 
 				<a class="nav-link" href="/login">Logout</a>
 			</li>
 		</ul>

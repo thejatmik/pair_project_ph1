@@ -12,7 +12,7 @@ function isLogin (req, res, next) {
 	// 		res.send(err);
 	// 	})
 
-	Renter.findByPk(1)
+	Renter.findByPk(2)
 		.then(result => {
 			req.session.isLogin = true;
 			req.session.user = result;
