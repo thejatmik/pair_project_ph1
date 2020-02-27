@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= pageTitle %></title>
+	<%- include('../bootstrap-css') %>
+</head>
+<body>
+	<div class="container">
+		<h2><%= pageTitle %></h2>
+		<% if (action === 'showCreate') { %> 
+			<form method="POST" action="/owner/create/car">
+		<% } else if (action === 'showUpdate') { %>
+			<form method="POST" action="/owner/update/car/<%= data.car.id %>">
+		<% } %> 
+				<div class="col-md-4 mb-3">
+					<label for="brand">Brand</label>
+					<input type="text" class="form-control" id="brand" name="brand" 
+						value="<%= action === 'showUpdate' ? data.owner.name : '' %>" 
+						placeholder="<%= (action === 'showCreate') ? 'e.g: Toyota' : '' %>" 
+						required>
+				</div>
+				<div class="col-md-4 mb-3">
+					<label for="type">Type</label>
+					<select class="form-control" name="type" id="type">
+						<option>Sedan</option>
+						<option>Hatchback</option>
+						<option>Minivan</option>
+						<option>SUV</option>
+						<option>Crossover</option>
+						<option>Pickup</option>
+						<option>Coupe</option>
+						<option>Convertible</option>
+						<option>Station wagon</option>
+					</select>
+				</div>
+				<div class="col-md-4 mb-3">
+					<label for="rentalPrice">Rental Price</label>
+					<input type="text" class="form-control" id="rentalPrice" name="rentalPrice" 
+						value="<%= action === 'showUpdate' ? data.owner.rentalPrice : '' %>" 
+						placeholder="<%= (action === 'showCreate') ? 'e.g: 1000000' : '' %>" 
+						required>
+				</div>
+				<div class="col-md-4 mb-3">
+					<label for="longitude">Longitude</label>
+					<input type="text" class="form-control" id="longitude" name="longitude" 
+						value="<%= action === 'showUpdate' ? data.owner.longitude : '' %>" 
+						placeholder="<%= (action === 'showCreate') ? 'e.g: 0' : '' %>" 
+						required>
+				</div>
+				<div class="col-md-4 mb-3">
+					<label for="latitude">Latitude</label>
+					<input type="text" class="form-control" id="latitude" name="latitude" 
+						value="<%= action === 'showUpdate' ? data.owner.latitude : '' %>" 
+						placeholder="<%= (action === 'showCreate') ? 'e.g: 0' : '' %>" 
+						required>
+				</div>
+				<div class="col-md-4 mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+					<button class="btn btn-primary" onclick="window.history.go(-1);">Cancel</button>
+				</div>
+			</form>
+	</div>
+	<%- include('../bootstrap-js') %>
+</body>
+</html>
