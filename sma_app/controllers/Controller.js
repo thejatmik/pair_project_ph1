@@ -2,7 +2,8 @@ const { Owner, Renter, Booking } = require('../models/index');
 
 class Controller {
     static getRoot(req, res) {
-        res.send("hewo root controll owo");
+        console.log(req.session.user)
+        res.render("index");
     }
     static getLogin(req, res) {
         let msg = [];
@@ -31,19 +32,31 @@ class Controller {
         .then(arrRes => {
             let path = '';
             if (arrRes[0].length > 0) {
+                req.session.user = arrRes[0][0]
+                req.session.userType = "owner"
                 path = '/owner';
             } else if (arrRes[1].length > 0) {
-                path = '/renter/';
-                (arrRes[1][0].Booking.bookStatus) ? path += 'bookingdetail' : path+= 'availablecars';
+                req.session.user = arrRes[1][0]
+                req.session.userType = "renter"
+                path = '/renter';
+                if (arrRes[1][0].Booking) {
+                    (arrRes[1][0].Booking.bookStatus) ? path += '/bookingdetail' : path+= '/availablecars';
+                } else {
+                    path = "/renter/availablecars"
+                }
             } else {
                 req.session.failLogin = "Username/pass did not match";
                 res.redirect("/login");
             }
-
             res.redirect(path);
         })
         .catch(err => {
             res.send(err);
+        });
+    }
+    static getLogout(req, res) {
+        req.session.destroy(() => {
+            res.redirect("/")
         });
     }
 }

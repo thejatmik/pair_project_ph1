@@ -15,7 +15,7 @@ class RenterController {
 		.then(result => {
 			res.render("booking/details", {
 				table: result,
-				modelName: 'renter',
+				modelName: 'renter/bookingdetail',
 				helpers: {
 					daysLeft: daysLeft,
 					dateFormatter: dateFormatter,
@@ -57,7 +57,6 @@ class RenterController {
 			include: [Owner]
 		})
 			.then(result => {
-				console.log(result);
 				res.render('booking/form', {
 					'pageTitle': 'Booking',
 					'data': {
