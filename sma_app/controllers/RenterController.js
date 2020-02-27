@@ -41,18 +41,34 @@ class RenterController {
 	}
 
 	static showBookingForm (req, res) {
-		res.render('booking/form', {
-			'pageTitle': 'Booking',
-			'data': {
-				'car': car
-			}
+		let carId = req.params.carId;
+
+		Car.findByPk(carId, {
+			include: [Owner]
 		})
+			.then(result => {
+				console.log(result);
+				res.render('booking/form', {
+					'pageTitle': 'Booking',
+					'data': {
+						'car': result,
+						'owner': result.Owner
+					},
+					'modelName': 'renter'
+				})
+			})
+			.catch(err => {
+				console.log(err);
+				res.send(err);
+			});
 	}
 
 	static book (req, res) {
+		// let obj = 
 
+		// Booking.create()
+			
 	}
-
 }
 
 module.exports = RenterController;
