@@ -1,7 +1,9 @@
 const router = require('express').Router();
+const RenterController = require('../controllers/RenterController');
 
-// router.get('/', RenterController.showList);
-// router.get('/booking/', RenterController.showBookForm); // milih mobil, milih startdate & days
-// router.post('/booking/', RenterController.book);
+router.get('/bookingdetail', RenterController.bookDetail);
+router.get('/availablecars', RenterController.showAvailableCar);
+router.get('/book/', RenterController.showBookingForm); // milih mobil, milih startdate & days
+router.post('/book/', RenterController.book);
 
 module.exports = router;

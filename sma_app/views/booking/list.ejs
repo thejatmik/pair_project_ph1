@@ -4,16 +4,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Owner Page</title>
-	<%- include('../bootstrap-css') %> 
+	<%- include('../bootstrap-css') %>
 </head>
 <body>
 	<%- include('../navbar') %> 
 	<div class="container">
-		<div class="d-flex justify-content-between">
-			<h2>Hi <%= data.owner.name %></h2>
-
-			<button class="btn btn-primary" onclick="location.href='/owner/create/car'">Add New Car</button>
-		</div>
 		<table id="movie" class="table table-striped table-bordered table-hover" style="width:100%">
 			<thead>
 				<tr>
@@ -26,8 +21,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% data.owner.Cars.forEach((e, i) => { %>
-					<tr class="table-<%= (e.isReady === 'true') ? 'success' : 'danger' %>">
+				<% data.cars.forEach((e, i) => { %>
+					<tr class="table-hover">
 						<td><%= i + 1 %> </td>
 						<td><%= e.brand %></td>
 						<td><%= e.type %></td>
@@ -35,12 +30,7 @@
 						<td><%= (e.isReady === 'true') ? 'Available' : 'Unavailable' %></td>
 						<td style="text-align: center;">
 							<button class="btn btn-primary" 
-								onclick="location.href='/owner/update/car/<%= e.id %>'">Edit</button>
-						</td>
-						<td style="text-align: center;">
-							<form action="/owner/delete/car/<%= e.id %>" method="get">
-								<button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-							</form>
+								onclick="location.href='/owner/update/car/<%= e.id %>'">Book</button>
 						</td>
 					</tr>
 				<% }) %>

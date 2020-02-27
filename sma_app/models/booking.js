@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		rentDay: {
 			type: DataTypes.STRING
+		},
+		bookStatus: {
+			type: DataTypes.BOOLEAN
 		}
 	}, {
 		sequelize,
