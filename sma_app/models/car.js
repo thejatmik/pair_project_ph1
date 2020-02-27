@@ -1,6 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-	class Car extends sequelize.Sequelize.Model {};
+	class Car extends sequelize.Sequelize.Model {
+		decimalFormatting (value) {
+			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+	}
+
 	Car.init({
 		OwnerId: {
 			type: DataTypes.INTEGER

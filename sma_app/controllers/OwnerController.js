@@ -5,17 +5,17 @@ class OwnerController {
 		let ownerId = req.session.user.id;
 
 		Owner.findByPk(ownerId, {
-			include: {
-				model: Car,
-			},
-			// order: [['isReady', 'DESC']]
-			
+			include: Car,
+			order: [
+				[{ model: Car }, 'isReady', 'DESC']
+			]
 		})
 			.then(result => {
 				res.render('owner/list', {
 					data: {
 						owner: result
-					}
+					},
+					modelName: 'owner'
 				})
 			})
 			.catch(err => {
@@ -24,11 +24,26 @@ class OwnerController {
 	}
 	
 	static showCreateForm(req, res) {
-
+		res.render('owner/form', {
+			modelName: 'owner',
+			pageTitle: 'Add New Car',
+			action: 'showCreate'
+		})
 	}
 	
 	static create(req, res) {
+		let obj = req.body;
+		let ownerId = req.session.user.id;
 
+		obj.OwnerId = ownerId;
+		Car.create(obj)
+			.then(result => {
+				res.redirect('/owner');
+			})
+			.catch(err => {
+				console.log(err);
+				res.render(err);
+			});
 	}
 	
 	static showUpdateForm(req, res) {
