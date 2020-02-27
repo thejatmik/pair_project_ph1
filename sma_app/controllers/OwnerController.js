@@ -25,9 +25,9 @@ class OwnerController {
 	
 	static showCreateForm(req, res) {
 		res.render('owner/form', {
-			modelName: 'owner',
-			pageTitle: 'Add New Car',
-			action: 'showCreate'
+			'modelName': 'owner',
+			'pageTitle': 'Add New Car',
+			'action': 'showCreate'
 		})
 	}
 	
@@ -41,21 +41,58 @@ class OwnerController {
 				res.redirect('/owner');
 			})
 			.catch(err => {
-				console.log(err);
-				res.render(err);
+				res.send(err.errors);
 			});
 	}
 	
 	static showUpdateForm(req, res) {
+		let carId = req.params.carId;
 
+		Car.findByPk(carId)
+			.then(result => {
+				res.render('owner/form', {
+					data: {
+						'car': result
+					},
+					'action': 'showUpdate',
+					'modelName': 'owner',
+					'pageTitle': 'Update Car'
+				});
+			})
+			.catch(err => {
+				res.send(err.errors);
+			});
 	}
 	
-	static update(req, res) {
-
+	static update (req, res) {
+		let obj = req.body;
+		let carId = req.params.carId;
+		
+		Car.update(obj, {
+			where: { id: carId }
+		})
+			.then(result => {
+				res.redirect('/owner')
+			})
+			.catch(err => {
+				console.log(err);
+				res.send(err);
+			});
 	}
 	
 	static delete(req, res) {
+		let carId = req.params.carId;
 
+		Car.destroy({
+			where: { id: carId }
+		})
+			.then(result => {
+				res.redirect('/owner')
+			})
+			.catch(err => {
+				console.log(err);
+				res.send(err);
+			})
 	}
 	
 }

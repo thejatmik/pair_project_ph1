@@ -11,10 +11,29 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER
 		},
 		brand: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Please input the brand!'
+				}
+			}
 		},
 		rentalPrice: {
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Please input the brand!'
+				},
+				isNumeric: {
+					args: true,
+					msg: 'Rental Price should be in number!',
+				},
+				isGreaterThanZero (value) {
+					if (parseInt(value) < 1) throw new Error('Rental Price must be greater than 0!')
+				}
+			}
 		},
 		isReady: {
 			type: DataTypes.STRING
@@ -26,11 +45,22 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING
 		},
 		type: {
-			type: DataTypes.STRING
+			type: DataTypes.STRING,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Please select car type!'
+				}
+			}
 		}
 	}, {
 		sequelize,
-		modelName: 'Car'
+		modelName: 'Car',
+		hooks: {
+			beforeCreate: (car, options) => {
+				car.isReady = true;
+			}
+		}
 	});
 	Car.associate = function(models) {
 		// associations can be defined here
