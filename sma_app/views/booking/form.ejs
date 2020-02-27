@@ -12,7 +12,7 @@
 		<div class="d-flex">
 			<div class="col-sm-8">
 				<h4>Book Detail</h4>
-				<form method="POST" action="/renter/book">
+				<form method="POST" action="/renter/book/<%= data.car.id %>">
 					<div class="form-group">
 						<label for="startDate">Start Date</label>
 						<input type="date" class="form-control" id="startDate" name="startDate" required>
