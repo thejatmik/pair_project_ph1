@@ -8,6 +8,7 @@ module.exports = {
 			paymentStatus: 'Paid',
 			startDate: new Date('2020-02-29'),
 			rentDay: 5,
+			bookStatus: false,
 			createdAt: new Date(),
         	updatedAt: new Date()
 		}, {
@@ -16,6 +17,7 @@ module.exports = {
 			paymentStatus: 'Unpaid',
 			startDate: new Date('2020-02-30'),
 			rentDay: 4,
+			bookStatus: false,
 			createdAt: new Date(),
         	updatedAt: new Date()
 		}, {
@@ -24,6 +26,7 @@ module.exports = {
 			paymentStatus: 'Paid',
 			startDate: new Date(),
 			rentDay: 2,
+			bookStatus: true,
 			createdAt: new Date(),
         	updatedAt: new Date()
 		}], {});

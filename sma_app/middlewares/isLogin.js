@@ -1,7 +1,18 @@
-const { Owner } = require('../models/index');
+const { Owner, Renter } = require('../models/index');
 
 function isLogin (req, res, next) {
-	Owner.findByPk(1)
+	// Owner.findByPk(1)
+	// 	.then(result => {
+	// 		req.session.isLogin = true;
+	// 		req.session.user = result;
+	// 		next();
+	// 	})
+	// 	.catch(err => {
+	// 		console.log(err);
+	// 		res.send(err);
+	// 	})
+
+	Renter.findByPk(1)
 		.then(result => {
 			req.session.isLogin = true;
 			req.session.user = result;
