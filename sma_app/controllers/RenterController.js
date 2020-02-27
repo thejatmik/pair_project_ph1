@@ -1,8 +1,23 @@
-const { Car, Booking } = require('../models/index')
+const { Renter, Owner, Car, Booking } = require('../models/index')
 
 class RenterController {
 	static bookDetail (req, res) {
-		res.send('book detail')
+		// res.send('book detail')
+		Renter.findByPk(req.session.user.id, {
+		// Renter.findByPk(3, {
+			include: [{model: Booking, 
+				include: [{model: Car, 
+					include: [{model: Owner}]
+				}]
+			}]
+		})
+		.then(result => {
+			// res.send(result);
+			res.render("booking/details", {table: result});
+		})
+		.catch(err => {
+			res.send(err)
+		});
 	}
 
 	static showAvailableCar (req, res) {
