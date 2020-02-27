@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       startDate: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       rentDay: {
         type: Sequelize.STRING

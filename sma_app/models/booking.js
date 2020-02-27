@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
 		paymentStatus: {
 			type: DataTypes.STRING
 		},
-		startDate: { //valid if equal or more than today
-			type: DataTypes.STRING
+		startDate: {
+			type: DataTypes.DATE
 		},
 		rentDay: {
 			type: DataTypes.STRING
@@ -23,10 +23,18 @@ module.exports = (sequelize, DataTypes) => {
 	}, {
 		sequelize,
 		modelName: 'Booking',
-		hooks: {
-			beforeCreate: (booking, options) => {
-				booking.paymentStatus = 'Unpaid';
-				booking.bookStatus = false;
+		getterMethods: {
+			startDateFormatted () {
+				let rawValue = this.startDate;
+				return `${rawValue.getFullYear()}-${(rawValue.getMonth() + 1) < 10 ? ('0' + (rawValue.getMonth() + 1)) : rawValue.getMonth() + 1}-${rawValue.getDate() < 10 ? ('0' + rawValue.getDate()) : rawValue.getDate()}`;
+			},
+			daysLeft () {
+				let startDate = this.startDate;
+				let currentDate = new Date();
+
+				const diffTime = Math.abs(currentDate - startDate);
+				const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+				return diffDays;
 			}
 		}
 	});
