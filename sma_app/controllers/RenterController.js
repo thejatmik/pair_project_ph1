@@ -2,9 +2,7 @@ const { Renter, Owner, Car, Booking } = require('../models/index')
 
 class RenterController {
 	static bookDetail (req, res) {
-		// res.send('book detail')
 		Renter.findByPk(req.session.user.id, {
-		// Renter.findByPk(3, {
 			include: [{model: Booking, 
 				include: [{model: Car, 
 					include: [{model: Owner}]
@@ -23,7 +21,6 @@ class RenterController {
 	static showAvailableCar (req, res) {
 		// 'welcome name, which car do you want to rent?'
 		// 'ajax filter?'
-
 		Car.findAll({
 			where: {
 				isReady: 'true'
