@@ -20,7 +20,8 @@ class RenterController {
 					daysLeft: daysLeft,
 					dateFormatter: dateFormatter,
 					isToday: isToday
-				}
+				},
+				userType: req.session.userType
 			});
 		})
 		.catch(err => {
@@ -41,7 +42,8 @@ class RenterController {
 					'modelName': 'booking',
 					'data': {
 						cars: result
-					}
+					},
+					userType: req.session.userType
 				})
 			})
 			.catch(err => {
@@ -63,7 +65,8 @@ class RenterController {
 						'car': result,
 						'owner': result.Owner
 					},
-					'modelName': 'renter'
+					'modelName': 'renter',
+					userType: req.session.userType
 				})
 			})
 			.catch(err => {
@@ -135,7 +138,6 @@ class RenterController {
 		})
 	}
 	static startRent(req, res) {
-		let carId = req.query.carId;
 		Booking.update({
 			bookStatus: true
 		}, {
@@ -149,6 +151,25 @@ class RenterController {
 		.catch(err => {
 			res.send(err);
 		})
+	}
+
+	static moveLocation (req, res) {
+		let carId = req.query.carId;
+
+		Car.update({
+			longitude: Math.floor(Math.random() * 360) - 180,
+			latitude: Math.floor(Math.random() * 180) - 90
+		}, {
+			where: {
+				id: carId
+			}
+		})
+			.then(result => {
+				res.redirect('/renter/bookingdetail');
+			})
+			.catch(err => {
+				res.send(err);
+			})
 	}
 }
 

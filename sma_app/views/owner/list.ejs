@@ -23,7 +23,7 @@
 					<th>Type</th>
 					<th>Rental Price</th>
 					<th>Status</th>
-					<th colspan="3" style="text-align: center;">Action</th>
+					<th colspan="4" style="text-align: center;">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -39,16 +39,20 @@
 								onclick="location.href='/owner/update/car/<%= e.id %>'">Edit</button>
 						</td>
 						<td style="text-align: center;">
+							<button class="btn btn-primary" 
+								onclick="location.href='/owner/close/car/<%= e.id %>'">Close Booking</button>
+						</td>
+						<td style="text-align: center;">
+							<button class="btn btn-primary" onclick="showHideLocDiv('<%= `rowLoc${i}` %>')">Hide Map</button>
+						</td>
+						<td style="text-align: center;">
 							<form action="/owner/delete/car/<%= e.id %>" method="get">
 								<button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
 							</form>
 						</td>
-						<td style="text-align: center;">
-							<button class="btn btn-danger" onclick="showHideLocDiv('<%= `rowLoc${i}` %>')">Hide Map</button>
-						</td>
 					</tr>
 					<tr id='<%= `rowLoc${i}` %>' style="display: table-row;">
-						<td colspan="8" style="text-align: center;">
+						<td colspan="9" style="text-align: center;">
 							<%- include("../partials/mapDiv", {divId: "loc"+i, car: e}) %> 
 						</td>
 					</tr>
