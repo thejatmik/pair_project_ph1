@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 		paymentStatus: {
 			type: DataTypes.STRING
 		},
-		startDate: {
+		startDate: { //valid if equal or more than today
 			type: DataTypes.STRING
 		},
 		rentDay: {
@@ -22,7 +22,13 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}, {
 		sequelize,
-		modelName: 'Booking'
+		modelName: 'Booking',
+		hooks: {
+			beforeCreate: (booking, options) => {
+				booking.paymentStatus = 'Unpaid';
+				booking.bookStatus = false;
+			}
+		}
 	});
 	Booking.associate = function(models) {
 		// associations can be defined here

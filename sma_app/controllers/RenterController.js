@@ -64,10 +64,66 @@ class RenterController {
 	}
 
 	static book (req, res) {
+		// res.send(req.body);
 		// let obj = 
+		// renter id = req.session.user.id
+		// car id = req.params.carId
+		Booking.create({
+			RenterId: req.session.user.id,
+			CarId: req.params.carId,
+			startDate: req.body.startDate,
+			rentDay: req.body.rentDays
+		})
+		.then(result => {
+			res.redirect("/renter/bookingdetail")
+		})
+		.catch(err => {
+			res.send(err);
+		});
 
-		// Booking.create()
-			
+	}
+	static removeBooking(req, res) {
+		Booking.destroy({
+			where: {
+				RenterId: req.session.user.id
+			}
+		})
+		.then(result => {
+			res.redirect("/renter/bookingdetail");
+		})
+		.catch(err => {
+			res.send(err);
+		})
+	}
+	static payBooking(req, res) {
+		Booking.update({
+			paymentStatus: 'Paid'
+		}, {
+			where: {
+				RenterId: req.session.user.id
+			}
+		})
+		.then(result => {
+			res.redirect("/renter/bookingdetail")
+		})
+		.catch(err => {
+			res.send(err);
+		})
+	}
+	static startRent(req, res) {
+		Booking.update({
+			bookStatus: true
+		}, {
+			where: {
+				RenterId: req.session.user.id
+			}
+		})
+		.then(result => {
+			res.redirect("/renter/bookingdetail")
+		})
+		.catch(err => {
+			res.send(err);
+		})
 	}
 }
 
