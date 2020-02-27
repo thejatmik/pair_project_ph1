@@ -30,7 +30,7 @@
                     <a href="#"><%= table.Booking.paymentStatus !== "Paid" ? "Pay bookings" : "" %> </a>
                     <a href="#"><%= (table.Booking.paymentStatus === "Paid" && table.Booking.bookStatus === false) ? "Start rent" : "" %></a>
                     <a href="#"><%= table.Booking.bookStatus === true ? "Update location" : "" %></a>
-                    <a href="#">Remove booking</a>
+                    <a href="/renter/bookingdetail/remove">Remove booking</a>
                 </td>
             </tr>
         </table>
